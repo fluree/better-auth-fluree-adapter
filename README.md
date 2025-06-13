@@ -5,7 +5,7 @@ A complete authentication system built with [Next.js 15](https://nextjs.org), [B
 ## Features
 
 - 🔐 Email/password authentication
-- 🌐 OAuth login support (extensible)
+- 🌐 OAuth login support (Google OAuth implemented, extensible to others)
 - 📊 User dashboard with profile information
 - 🗄️ Fluree JSON-LD database integration
 - 🔧 TypeScript support
@@ -137,10 +137,15 @@ The custom Fluree adapter (`lib/auth/adapters/fluree-adapter.ts`) implements all
 3. Sign in with credentials
 4. Access protected dashboard
 
-### OAuth Providers
-1. Configure OAuth providers in `auth.ts`
-2. Add client credentials to `.env.local` 
-3. Test social login functionality
+### Google OAuth
+1. Create a Google OAuth application in [Google Cloud Console](https://console.cloud.google.com/)
+2. Add authorized redirect URI: `http://localhost:3000/api/auth/callback/google`
+3. Add credentials to `.env.local`:
+   ```env
+   GOOGLE_CLIENT_ID=your-client-id.apps.googleusercontent.com
+   GOOGLE_CLIENT_SECRET=your-client-secret
+   ```
+4. Sign in with Google button on the login page
 
 ## Database Schema
 

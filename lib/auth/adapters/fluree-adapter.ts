@@ -247,11 +247,16 @@ export const flureeAdapter = (config: FlureeAdapterConfig) => {
             query.offset = offset;
           }
 
-          // Add sorting if provided
+          // Add sorting if provided - Fluree uses specific syntax
           if (sortBy) {
             const { field, direction } = sortBy;
-            query.orderBy = [
-              [`${model}:${field}`, direction === "desc" ? "DESC" : "ASC"],
+            // Add the field to the where clause as a variable binding
+            const varName = `?${field}`;
+            query.where[`${model}:${field}`] = varName;
+            
+            // Fluree ordering: ["?var"] for asc, ["(desc ?var)"] for desc
+            query["order-by"] = [
+              direction === "desc" ? `(desc ${varName})` : varName
             ];
           }
 
